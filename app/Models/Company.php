@@ -9,7 +9,7 @@ class Company extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ID', 'TITLE'];
+    protected $fillable = ['ID', 'TITLE', 'REVENUE', 'PHONE', 'EMAIL'];
 
     public static function saveCompany($title, $revenue, $phone, $email)
     {

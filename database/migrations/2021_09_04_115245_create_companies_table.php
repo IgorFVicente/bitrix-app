@@ -17,6 +17,9 @@ class CreateCompaniesTable extends Migration
             $table->bigInteger("ID")->unique();
             $table->primary("ID");
             $table->string("TITLE");
+            $table->bigInteger("REVENUE");
+            $table->string("PHONE");
+            $table->string("EMAIL");
             $table->timestamps();
         });
     }

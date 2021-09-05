@@ -36,6 +36,8 @@ Route::post('/contacts/new', [ContactsController::class, 'store'])->name('regist
 
 Route::get('/companies/list', [CompaniesController::class, 'list']);
 
-Route::get('/vue-teste', function () {
-    return view('vue-teste');
-});
+Route::get('/companies/edit/{ID}', [CompaniesController::class, 'edit']);
+
+Route::post('/companies/update/{ID}', [CompaniesController::class, 'update'])->name('update_company');
+
+Route::get('/companies/delete/{ID}', [CompaniesController::class, 'remove'])->name('remove_company');

@@ -15,9 +15,9 @@
         <input type="text" name="revenue"> <br>
         <label for="">Telefone:</label> <br>
         <input type="text" name="phone1"> <br>
-        <!--<label for="">Telefone:</label> <br>
+        <label for="">Telefone 2:</label> <br>
         <input type="text" name="phone2"> <br>
-        <label for="">Telefone:</label> <br>
+        <!--<label for="">Telefone:</label> <br>
         <input type="text" name="phone3"> <br>
         <button type="button">Adicionar telefone</button><br>-->
         <label for="">E-mail:</label> <br>

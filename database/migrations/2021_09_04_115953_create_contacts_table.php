@@ -18,6 +18,8 @@ class CreateContactsTable extends Migration
             $table->primary("ID");
             $table->string("NAME");
             $table->string("LAST_NAME");
+            $table->string("PHONE");
+            $table->string("EMAIL");
             $table->timestamps();
         });
     }
