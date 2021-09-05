@@ -152,6 +152,7 @@ class CompaniesController extends Controller
         return redirect()->route('index');
     }
 
+
     public function vue()
     {
         return view('vue-teste');

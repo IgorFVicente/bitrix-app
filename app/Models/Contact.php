@@ -59,10 +59,10 @@ class Contact extends Model
 
         foreach ($contacts_id as $contact_id) {
             $queryData = array(
-                "id" => $contact_id
+                "id" => $contact_id->ID
             );
 
-            $result = webhook('crm.contact.delete', $queryData);
+            webhook('crm.contact.delete', $queryData);
         }
 
         DB::table('contacts')->where('COMPANY_ID', $id)->delete();
