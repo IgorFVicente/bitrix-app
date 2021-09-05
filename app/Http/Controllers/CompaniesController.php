@@ -47,8 +47,9 @@ class CompaniesController extends Controller
             'EMAIL' => $emailArray ? serialize($emailArray) : null
         ]);
 
-        if ($request->contact_name[0] != null) {
-            for ($i = 0; $i < count($request->contact_name); $i++) {
+        for ($i = 0; $i < count($request->contact_name); $i++) {
+            if ($request->contact_name[$i] != '') {
+
                 $contact_result = Contact::saveContact(
                     $request->contact_name[$i],
                     $request->contact_lastname[$i]
@@ -67,6 +68,7 @@ class CompaniesController extends Controller
                 );
             }
         }
+
 
         return redirect()->route('index');
     }
@@ -104,7 +106,7 @@ class CompaniesController extends Controller
         }
 
         for ($i = 0; $i < count($request->contact_name); $i++) {
-            if ($request->contact_id[$i] == 0 and $request->contact_name != '') {
+            if ($request->contact_id[$i] == 0 and $request->contact_name[$i] != '') {
                 $contact_result = Contact::saveContact(
                     $request->contact_name[$i],
                     $request->contact_lastname[$i]
@@ -145,6 +147,7 @@ class CompaniesController extends Controller
 
     public function remove($id)
     {
+        Contact::remove($id);
         Company::remove($id);
         return redirect()->route('index');
     }

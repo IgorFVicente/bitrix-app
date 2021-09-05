@@ -5,6 +5,7 @@ namespace App\Models;
 use Faker\Provider\Company;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Contact extends Model
 {
@@ -46,6 +47,25 @@ class Contact extends Model
             ]);
 
         return $result;
+    }
+
+    public static function remove($id)
+    {
+
+        $contacts_id = DB::table('contacts')
+            ->select('ID')
+            ->where('COMPANY_ID', $id)
+            ->get();
+
+        foreach ($contacts_id as $contact_id) {
+            $queryData = array(
+                "id" => $contact_id
+            );
+
+            $result = webhook('crm.contact.delete', $queryData);
+        }
+
+        DB::table('contacts')->where('COMPANY_ID', $id)->delete();
     }
 
     public function companies()

@@ -40,18 +40,6 @@ Route::post(
 
 
 Route::get(
-    '/contacts/new',
-    [ContactsController::class, 'create']
-);
-
-
-Route::post(
-    '/contacts/new',
-    [ContactsController::class, 'store']
-)->name('register_contact');
-
-
-Route::get(
     '/companies/list',
     [CompaniesController::class, 'list']
 );
