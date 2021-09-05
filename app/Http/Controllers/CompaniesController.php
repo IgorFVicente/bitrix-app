@@ -16,60 +16,56 @@ class CompaniesController extends Controller
 
     public function store(Request $request)
     {
-        //Transformar o phone e o email em arrays dinâmicas
-        $phone = array($request->phone1, $request->phone2, $request->phone3);
-        $email = array($request->email1, $request->email2, $request->email3);
         $company_result = Company::saveCompany(
             $request->title,
             $request->revenue,
-            $phone,
-            $email
+            $request->phone,
+            $request->email
         );
+
+
+        $phoneArray = array();
+        $emailArray = array();
+
+        foreach ($request->phone as $phone) {
+            if ($phone != '') {
+                array_push($phoneArray, $phone);
+            }
+        }
+
+        foreach ($request->email as $email) {
+            if ($email != '') {
+                array_push($emailArray, $email);
+            }
+        }
 
         Company::create([
             'ID' => $company_result['result'],
             'TITLE' => $request->title,
             'REVENUE' => $request->revenue,
-            'PHONE' => $phone ? serialize($phone) : null,
-            'EMAIL' => $email ? serialize($email) : null
+            'PHONE' => $phoneArray ? serialize($phoneArray) : null,
+            'EMAIL' => $emailArray ? serialize($emailArray) : null
         ]);
 
-        if ($request->contact_name1) {
-            $contact_result = Contact::saveContact(
-                $request->contact_name1,
-                $request->contact_lastname1
-            );
+        if ($request->contact_name[0] != null) {
+            for ($i = 0; $i < count($request->contact_name); $i++) {
+                $contact_result = Contact::saveContact(
+                    $request->contact_name[$i],
+                    $request->contact_lastname[$i]
+                );
 
-            Contact::create([
-                'ID' => $contact_result['result'],
-                'NAME' => $request->contact_name1,
-                'LAST_NAME' => $request->contact_lastname1,
-                'COMPANY_ID' => $company_result['result']
-            ]);
+                Contact::create([
+                    'ID' => $contact_result['result'],
+                    'NAME' => $request->contact_name[$i],
+                    'LAST_NAME' => $request->contact_lastname[$i],
+                    'COMPANY_ID' => $company_result['result']
+                ]);
 
-            Company::addContact(
-                $company_result['result'],
-                $contact_result['result']
-            );
-        }
-
-        if ($request->contact_name2) {
-            $contact_result = Contact::saveContact(
-                $request->contact_name2,
-                $request->contact_lastname2
-            );
-
-            Contact::create([
-                'ID' => $contact_result['result'],
-                'NAME' => $request->contact_name2,
-                'LAST_NAME' => $request->contact_lastname2,
-                'COMPANY_ID' => $company_result['result']
-            ]);
-
-            Company::addContact(
-                $company_result['result'],
-                $contact_result['result']
-            );
+                Company::addContact(
+                    $company_result['result'],
+                    $contact_result['result']
+                );
+            }
         }
 
         return redirect()->route('index');
@@ -91,14 +87,56 @@ class CompaniesController extends Controller
 
     public function update(Request $request)
     {
-        $phone = array($request->phone1, $request->phone2, $request->phone3);
-        $email = array($request->email1, $request->email2, $request->email3);
+        $phoneArray = array();
+        $emailArray = array();
+        $contactArray = array();
+
+        foreach ($request->phone as $phone) {
+            if ($phone != '') {
+                array_push($phoneArray, $phone);
+            }
+        }
+
+        foreach ($request->email as $email) {
+            if ($email != '') {
+                array_push($emailArray, $email);
+            }
+        }
+
+        for ($i = 0; $i < count($request->contact_name); $i++) {
+            if ($request->contact_id[$i] == 0 and $request->contact_name != '') {
+                $contact_result = Contact::saveContact(
+                    $request->contact_name[$i],
+                    $request->contact_lastname[$i]
+                );
+
+                Contact::create([
+                    'ID' => $contact_result['result'],
+                    'NAME' => $request->contact_name[$i],
+                    'LAST_NAME' => $request->contact_lastname[$i],
+                    'COMPANY_ID' => $request->ID
+                ]);
+
+                Company::addContact(
+                    $request->ID,
+                    $contact_result['result']
+                );
+            } else if ($request->contact_name != '') {
+                Contact::updateContact(
+                    $request->contact_id[$i],
+                    $request->contact_name[$i],
+                    $request->contact_lastname[$i]
+                );
+            }
+        }
+
         Company::updateCompany(
             $request->ID,
             $request->title,
             $request->revenue,
-            $phone,
-            $email
+            $phoneArray,
+            $emailArray,
+            $contactArray
         );
 
 

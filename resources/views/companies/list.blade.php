@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
-    
     <a href="/companies/new"><button>Novo Registro</button></a>
     <table>
         <tr>
@@ -34,22 +33,27 @@
             <td><?php echo $title ?></td>
             <td><?php echo $revenue ?></td>
             <td><?php
-                foreach ($phones as $phone) {
-                //retirar o if quando o número de telefones passados para a tabela for dinâmico
-                    if ($phone != ''){
-                        echo($phone . "<br>");
+                if ($phones != null) {
+                    foreach ($phones as $phone) {
+                            echo($phone . "<br>");
                     }
                 }?>
             </td>
             <td><?php
-                foreach ($emails as $email) {
-                //retirar o if quando o número de telefones passados para a tabela for dinâmico
-                    if ($email != ''){
+                if ($emails != null) {
+                    foreach ($emails as $email) {
                         echo($email . "<br>");
                     }
-                }?>
+                }
+                ?>
             </td>
-            <td><?php 
+            <td><?php
+
+                /** verifica se a próxima empresa da lista é a mesma que a atual,
+                * se for a mesma, passa para a tela apenas o novo contato e pula
+                * a próxima empresa da lista
+                */
+                
                 for ($j = $i; $j < count($companies); $j++){
                     if ($companies[$j]->COMPANY_ID == $id){
                         echo $companies[$j]->NAME . ' ' . $companies[$j]->LAST_NAME;

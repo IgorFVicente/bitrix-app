@@ -58,18 +58,43 @@ class Company extends Model
     public static function list()
     {
         $companies = DB::table('companies')
-            ->join('contacts', 'contacts.COMPANY_ID', '=', 'companies.ID')
+            ->select(
+                'companies.id as COMPANY_ID',
+                'companies.TITLE as TITLE',
+                'companies.REVENUE as REVENUE',
+                'companies.PHONE as PHONE',
+                'companies.EMAIL as EMAIL',
+                'contacts.ID as ID',
+                'contacts.NAME as NAME',
+                'contacts.LAST_NAME as LAST_NAME'
+            )
+            ->leftJoin('contacts', 'companies.ID', '=', 'contacts.COMPANY_ID')
+            ->orderByRaw('COMPANY_ID, NAME')
             ->get();
         return $companies;
     }
 
     public static function edit($id)
     {
-        $company = DB::table('companies')->where('ID', $id)->first();
+        $company = DB::table('companies')
+            ->select(
+                'companies.id as COMPANY_ID',
+                'companies.TITLE as TITLE',
+                'companies.REVENUE as REVENUE',
+                'companies.PHONE as PHONE',
+                'companies.EMAIL as EMAIL',
+                'contacts.ID as ID',
+                'contacts.NAME as NAME',
+                'contacts.LAST_NAME as LAST_NAME'
+            )
+            ->leftJoin('contacts', 'contacts.COMPANY_ID', '=', 'companies.ID')
+            ->where('companies.ID', $id)
+            ->orderBy('NAME')
+            ->get();
         return $company;
     }
 
-    public static function updateCompany($id, $title, $revenue, $phone, $email)
+    public static function updateCompany($id, $title, $revenue, $phone, $email, $contacts)
     {
         $queryData = array(
             'id' => $id,

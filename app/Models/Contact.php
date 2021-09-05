@@ -27,6 +27,27 @@ class Contact extends Model
         return $result;
     }
 
+    public static function updateContact($id, $name, $last_name)
+    {
+        $queryData = array(
+            'id' => $id,
+            'fields' => array(
+                "NAME" => $name,
+                "LAST_NAME" => $last_name
+            )
+        );
+
+        $result = webhook('crm.contact.update', $queryData);
+
+        Contact::where('ID', $id)
+            ->update([
+                'NAME' => $name,
+                'LAST_NAME' => $last_name
+            ]);
+
+        return $result;
+    }
+
     public function companies()
     {
         return $this->belongsTo(

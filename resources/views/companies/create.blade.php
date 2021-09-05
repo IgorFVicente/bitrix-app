@@ -15,29 +15,28 @@
         <label for="">Receita Anual:</label> <br>
         <input type="text" name="revenue"> <br>
         <label for="">Telefone:</label> <br>
-        <input type="text" name="phone1"> <br>
+        <input type="text" name="phone[0]"> <br>
         <label for="">Telefone 2:</label> <br>
-        <input type="text" name="phone2"> <br>
+        <input type="text" name="phone[1]"> <br>
         <!--<label for="">Telefone:</label> <br>
         <input type="text" name="phone3"> <br>-->
         <button type="button">Adicionar telefone</button> <br>
         <label for="">E-mail:</label> <br>
-        <input type="email" name="email1"> <br>
+        <input type="email" name="email[0]"> <br>
         <button type="button">Adicionar e-mail</button> <br>
         <label for="">Nome do Contato 1:</label> <br>
-        <input type="text" name="contact_name1"> <br>
+        <input type="text" name="contact_name[0]"> <br>
         <label for="">Sobrenome do Contato 1:</label> <br>
-        <input type="text" name="contact_lastname1"> <br>
+        <input type="text" name="contact_lastname[0]"> <br>
         <label for="">Nome do Contato 2:</label> <br>
-        <input type="text" name="contact_name2"> <br>
+        <input type="text" name="contact_name[1]"> <br>
         <label for="">Sobrenome do Contato 2:</label> <br>
-        <input type="text" name="contact_lastname2"> <br>
+        <input type="text" name="contact_lastname[1]"> <br>
         <!--<label for="">E-mail:</label> <br>
         <input type="email" name="email2"> <br>
         <label for="">E-mail:</label> <br>
-        <input type="email" name="email3"> <br>
-        <button type="button">Criar novo Contato</button><br>
-        <button type="button">Atrelar Contato existente</button><br> -->
+        <input type="email" name="email3"> <br>-->
+        <button type="button">Adicionar Contato</button><br> 
         <button type="submit">Criar</button>
 
     <script src="{{ asset('js/app.js') }}"></script>
