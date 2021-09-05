@@ -38,25 +38,44 @@ class CompaniesController extends Controller
 
     public function list()
     {
-        $companies = DB::table('companies')->get();
+        $companies = Company::list();
 
         return view('companies.list', ['companies' => $companies]);
     }
 
     public function edit($id)
     {
-        $company = DB::table('companies')->where('ID', $id)->first();
+        $company = Company::edit($id);
 
         return view('companies.edit', ['company' => $company]);
     }
 
-    public function update()
+    public function update(Request $request)
     {
+        $phone = array($request->phone1, $request->phone2, $request->phone3);
+        $email = array($request->email1, $request->email2, $request->email3);
+        Company::updateCompany(
+            $request->ID,
+            $request->title,
+            $request->revenue,
+            $phone,
+            $email
+        );
+
+        Company::where('ID', $request->ID)
+            ->update([
+                'TITLE' => $request->title,
+                'REVENUE' => $request->revenue,
+                'PHONE' => $phone ? serialize($phone) : null,
+                'EMAIL' => $email ? serialize($email) : null
+            ]);
+
         return redirect()->route('index');
     }
 
-    public function delete()
+    public function remove($id)
     {
+        Company::remove($id);
         return redirect()->route('index');
     }
 }
