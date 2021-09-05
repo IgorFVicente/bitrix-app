@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
     <a href="/"><button>Voltar</button></a>
@@ -18,17 +19,27 @@
         <label for="">Telefone 2:</label> <br>
         <input type="text" name="phone2"> <br>
         <!--<label for="">Telefone:</label> <br>
-        <input type="text" name="phone3"> <br>
-        <button type="button">Adicionar telefone</button><br>-->
+        <input type="text" name="phone3"> <br>-->
+        <button type="button">Adicionar telefone</button> <br>
         <label for="">E-mail:</label> <br>
         <input type="email" name="email1"> <br>
+        <button type="button">Adicionar e-mail</button> <br>
+        <label for="">Nome do Contato 1:</label> <br>
+        <input type="text" name="contact_name1"> <br>
+        <label for="">Sobrenome do Contato 1:</label> <br>
+        <input type="text" name="contact_lastname1"> <br>
+        <label for="">Nome do Contato 2:</label> <br>
+        <input type="text" name="contact_name2"> <br>
+        <label for="">Sobrenome do Contato 2:</label> <br>
+        <input type="text" name="contact_lastname2"> <br>
         <!--<label for="">E-mail:</label> <br>
         <input type="email" name="email2"> <br>
         <label for="">E-mail:</label> <br>
         <input type="email" name="email3"> <br>
-        <button type="button">Adicionar e-mail</button><br>
         <button type="button">Criar novo Contato</button><br>
         <button type="button">Atrelar Contato existente</button><br> -->
         <button type="submit">Criar</button>
+
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

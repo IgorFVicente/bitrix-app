@@ -15,29 +15,66 @@ use App\Http\Controllers\ContactsController;
 |
 */
 
-
 Route::get(
     '/',
     [CompaniesController::class, 'list']
 )->name('index');
+
 
 Route::post(
     '/',
     [CompaniesController::class, 'list']
 );
 
-Route::get('/companies/new', [CompaniesController::class, 'create']);
 
-Route::post('/companies/new', [CompaniesController::class, 'store'])->name('register_company');
+Route::get(
+    '/companies/new',
+    [CompaniesController::class, 'create']
+);
 
-Route::get('/contacts/new', [ContactsController::class, 'create']);
 
-Route::post('/contacts/new', [ContactsController::class, 'store'])->name('register_contact');
+Route::post(
+    '/companies/new',
+    [CompaniesController::class, 'store']
+)->name('register_company');
 
-Route::get('/companies/list', [CompaniesController::class, 'list']);
 
-Route::get('/companies/edit/{ID}', [CompaniesController::class, 'edit']);
+Route::get(
+    '/contacts/new',
+    [ContactsController::class, 'create']
+);
 
-Route::post('/companies/update/{ID}', [CompaniesController::class, 'update'])->name('update_company');
 
-Route::get('/companies/delete/{ID}', [CompaniesController::class, 'remove'])->name('remove_company');
+Route::post(
+    '/contacts/new',
+    [ContactsController::class, 'store']
+)->name('register_contact');
+
+
+Route::get(
+    '/companies/list',
+    [CompaniesController::class, 'list']
+);
+
+
+Route::get(
+    '/companies/edit/{ID}',
+    [CompaniesController::class, 'edit']
+);
+
+
+Route::post(
+    '/companies/update/{ID}',
+    [CompaniesController::class, 'update']
+)->name('update_company');
+
+
+Route::get(
+    '/companies/delete/{ID}',
+    [CompaniesController::class, 'remove']
+)->name('remove_company');
+
+Route::get(
+    '/vue',
+    [CompaniesController::class, 'vue']
+);

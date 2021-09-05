@@ -10,31 +10,17 @@ class Contact extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ID', 'NAME', 'LAST_NAME'];
+    protected $fillable = ['ID', 'NAME', 'LAST_NAME', 'COMPANY_ID'];
 
-    public static function saveContact($name, $last_name, $phone, $email)
+    public static function saveContact($name, $last_name)
     {
         $queryData = array(
             'fields' => array(
                 "NAME" => $name,
-                "LAST_NAME" => $last_name,
-                "PHONE" => array(),
-                "EMAIL" => array()
+                "LAST_NAME" => $last_name
             ),
             'params' => array("REGISTER_SONET_EVENT" => "Y")
         );
-
-        if ($phone) {
-            for ($i = 0; $i < count($phone); $i++) {
-                array_push($queryData['fields']["PHONE"], array("VALUE" => $phone[$i]));
-            }
-        }
-
-        if ($email) {
-            for ($i = 0; $i < count($email); $i++) {
-                array_push($queryData['fields']["EMAIL"], array("VALUE" => $email[$i]));
-            }
-        }
 
         $result = webhook('crm.contact.add', $queryData);
 
@@ -43,11 +29,8 @@ class Contact extends Model
 
     public function companies()
     {
-        return $this->belongsToMany(
-            Company::class,
-            'contact_companies',
-            'contact_id',
-            'company_id'
+        return $this->belongsTo(
+            Company::class
         );
     }
 }

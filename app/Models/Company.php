@@ -36,15 +36,30 @@ class Company extends Model
             }
         }
 
-
         $result = webhook('crm.company.add', $queryData);
+
+        return $result;
+    }
+
+    public static function addContact($company_id, $contact_id)
+    {
+        $queryData = array(
+            'id' => $company_id,
+            'fields' => array(
+                "CONTACT_ID" => $contact_id
+            )
+        );
+
+        $result = webhook('crm.company.contact.add', $queryData);
 
         return $result;
     }
 
     public static function list()
     {
-        $companies = DB::table('companies')->get();
+        $companies = DB::table('companies')
+            ->join('contacts', 'contacts.COMPANY_ID', '=', 'companies.ID')
+            ->get();
         return $companies;
     }
 
@@ -81,6 +96,14 @@ class Company extends Model
 
         $result = webhook('crm.company.update', $queryData);
 
+        Company::where('ID', $id)
+            ->update([
+                'TITLE' => $title,
+                'REVENUE' => $revenue,
+                'PHONE' => $phone ? serialize($phone) : null,
+                'EMAIL' => $email ? serialize($email) : null
+            ]);
+
         return $result;
     }
 
@@ -99,11 +122,8 @@ class Company extends Model
 
     public function contacts()
     {
-        return $this->belongsToMany(
-            Contact::class,
-            'contact_companies',
-            'company_id',
-            'contact_id'
+        return $this->hasMany(
+            Contact::class
         );
     }
 }

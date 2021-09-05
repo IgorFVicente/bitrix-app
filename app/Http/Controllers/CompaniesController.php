@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Company;
+use App\Models\Contact;
 use Illuminate\Support\Facades\DB;
 
 class CompaniesController extends Controller
@@ -18,7 +19,7 @@ class CompaniesController extends Controller
         //Transformar o phone e o email em arrays dinâmicas
         $phone = array($request->phone1, $request->phone2, $request->phone3);
         $email = array($request->email1, $request->email2, $request->email3);
-        $result = Company::saveCompany(
+        $company_result = Company::saveCompany(
             $request->title,
             $request->revenue,
             $phone,
@@ -26,12 +27,50 @@ class CompaniesController extends Controller
         );
 
         Company::create([
-            'ID' => $result['result'],
+            'ID' => $company_result['result'],
             'TITLE' => $request->title,
             'REVENUE' => $request->revenue,
             'PHONE' => $phone ? serialize($phone) : null,
             'EMAIL' => $email ? serialize($email) : null
         ]);
+
+        if ($request->contact_name1) {
+            $contact_result = Contact::saveContact(
+                $request->contact_name1,
+                $request->contact_lastname1
+            );
+
+            Contact::create([
+                'ID' => $contact_result['result'],
+                'NAME' => $request->contact_name1,
+                'LAST_NAME' => $request->contact_lastname1,
+                'COMPANY_ID' => $company_result['result']
+            ]);
+
+            Company::addContact(
+                $company_result['result'],
+                $contact_result['result']
+            );
+        }
+
+        if ($request->contact_name2) {
+            $contact_result = Contact::saveContact(
+                $request->contact_name2,
+                $request->contact_lastname2
+            );
+
+            Contact::create([
+                'ID' => $contact_result['result'],
+                'NAME' => $request->contact_name2,
+                'LAST_NAME' => $request->contact_lastname2,
+                'COMPANY_ID' => $company_result['result']
+            ]);
+
+            Company::addContact(
+                $company_result['result'],
+                $contact_result['result']
+            );
+        }
 
         return redirect()->route('index');
     }
@@ -62,13 +101,6 @@ class CompaniesController extends Controller
             $email
         );
 
-        Company::where('ID', $request->ID)
-            ->update([
-                'TITLE' => $request->title,
-                'REVENUE' => $request->revenue,
-                'PHONE' => $phone ? serialize($phone) : null,
-                'EMAIL' => $email ? serialize($email) : null
-            ]);
 
         return redirect()->route('index');
     }
@@ -77,5 +109,10 @@ class CompaniesController extends Controller
     {
         Company::remove($id);
         return redirect()->route('index');
+    }
+
+    public function vue()
+    {
+        return view('vue-teste');
     }
 }

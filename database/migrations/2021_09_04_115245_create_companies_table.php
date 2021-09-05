@@ -14,12 +14,12 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->bigInteger("ID")->unique();
+            $table->unsignedBigInteger("ID")->unique();
             $table->primary("ID");
             $table->string("TITLE");
-            $table->bigInteger("REVENUE");
-            $table->string("PHONE");
-            $table->string("EMAIL");
+            $table->bigInteger("REVENUE")->nullable();
+            $table->string("PHONE")->nullable();
+            $table->string("EMAIL")->nullable();
             $table->timestamps();
         });
     }

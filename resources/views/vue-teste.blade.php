@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="app">
-        <modal-window></modal-window>
+        <modal-window>Teste</modal-window>
      </div>
 </body>
      <script src="{{ asset('js/app.js') }}"></script>
