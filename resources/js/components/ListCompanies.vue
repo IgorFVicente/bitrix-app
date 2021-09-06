@@ -120,12 +120,9 @@ export default {
 
     .listCompanies {
         max-width: 100%;
-        border: 3px solid #555;
-        border-radius: 30px;
-        padding: 20px;
         background: #fff;
-        min-height: 600px;
         margin: 10px;
+        padding: 20px;
     }
 
     .listHeading {

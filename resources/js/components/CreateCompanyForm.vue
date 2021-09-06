@@ -6,7 +6,7 @@
                 <ul>
                 <li>
                     <label for="title" class="formLabel">Nome da empresa:</label>
-                    <input type="text" name="title">
+                    <input type="text" name="title" required>
                 </li>
                 <li>
                     <label for="" class="formLabel">Receita Anual:</label> 
@@ -57,11 +57,9 @@ export default {
 
     .createCompany {
         max-width: 100%;
-        border: 3px solid #555;
-        border-radius: 30px;
-        padding: 20px;
         background: #fff;
         margin: 10px;
+        padding: 20px;
     }
 
     .formHeading {
@@ -122,8 +120,8 @@ export default {
         display: block;
         outline: none;
         border: none;
-        height: 25px;
-        line-height: 25px;
+        height: 15px;
+        line-height: 15px;
         font-size: 16px;
         padding: 0;
     }

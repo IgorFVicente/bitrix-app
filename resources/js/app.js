@@ -22,8 +22,8 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('create-company-form', require('./components/CreateCompanyForm.vue').default);
-Vue.component('edit-company-form', require('./components/EditCompanyForm.vue').default);
 Vue.component('list-companies', require('./components/ListCompanies.vue').default);
+Vue.component('edit-company-form', require('./components/EditCompanyForm.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

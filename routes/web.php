@@ -45,16 +45,16 @@ Route::get(
 );
 
 
-Route::get(
-    '/companies/edit/{ID}',
-    [CompaniesController::class, 'edit']
-);
-
-
 Route::post(
     '/companies/update/{ID}',
     [CompaniesController::class, 'update']
 )->name('update_company');
+
+
+Route::get(
+    '/companies/edit/{ID}',
+    [CompaniesController::class, 'edit']
+);
 
 
 Route::get(

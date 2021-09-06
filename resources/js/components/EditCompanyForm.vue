@@ -1,69 +1,113 @@
 <template>
     <div class="editCompany">
-        <div class="formHeading"><h2>NOVA EMPRESA</h2></div>
-        <div class="companyFormDiv">
-            <form :action="formRoute" method="POST" class="companyForm">
-                <ul>
-                <li>
-                    <label for="title" class="formLabel">Nome da empresa:</label>
-                    <input type="text" name="title">
+        <div class="editHeading"><h2>EDITAR EMPRESA</h2></div>
+        <div class="editCompanyDiv">
+            <form :action="formRoute" class="editForm" method="POST">
+            <ul>
+            <li>
+                <label for="title">Nome da empresa:</label> <br>
+                <input type="text" id="title" name="title" :value="company.TITLE" required>
+            </li>
+            <li>
+                <label for="">Receita Anual:</label> <br>
+                <input type="text" name="revenue" :value="company.REVENUE">
+            </li>    
+            <template v-if="company.PHONE">
+                <li v-for="(phone, index, i) in company.PHONE">
+                    <label for="">Telefone {{index + 1}}</label><br/>
+                    <input type="text" :name="'phone[' + index + ']'" :value="phone">
                 </li>
+            </template>
+            <template v-else>
                 <li>
-                    <label for="" class="formLabel">Receita Anual:</label> 
-                    <input type="text" name="revenue">
-                </li>
-                <li>
-                    <label for="" class="formLabel">Telefone:</label> 
+                    <label for="">Telefone 1:</label><br/>
                     <input type="text" name="phone[0]">
                 </li>
-                <li class="formButton">
+            </template>
+            <li class="formButton">
                     <button class="bitrixBtn" type="button">Adicionar telefone</button>
+            </li>
+            <template v-if="company.EMAIL">
+                <li v-for="(email, index, i) in company.EMAIL">
+                    <label for="">E-mail {{index + 1}}</label><br/>
+                    <input type="text" :name="'email[' + index + ']'" :value="email">
                 </li>
+            </template>
+            <template v-else>
                 <li>
-                    <label for="" class="formLabel">E-mail:</label>
-                    <input type="email" name="email[0]">
+                    <label for="">E-mail 1:</label><br/>
+                    <input type="text" name="email[0]">
                 </li>
-                <li class="formButton">
+            </template>
+            <li class="formButton">
                     <button class="bitrixBtn" type="button">Adicionar e-mail</button>
-                </li>
+            </li>
+            <template v-if="company.CONTACTS">
+                <template v-for="(contact, index, i) in company.CONTACTS">
+                        <input class="hiddenInput" type="text" :name="'contact_id[' + index +']'" :value="contact.ID">
+                    <li>
+                        <label for="">Nome do Contato {{index + 1}}:</label><br/>
+                        <input type="text" :name="'contact_name[' + index + ']'" :value="contact.NAME">
+                    </li>
+                    <li>    
+                        <label for="">Sobrenome do Contato {{index + 1}}:</label><br/>
+                        <input type="text" :name="'contact_lastname[' + index + ']'" :value="contact.LAST_NAME">
+                    </li>
+                </template>    
+            </template>
+            <template v-else>
                 <li>
-                    <label for="" class="formLabel">Nome do Contato 1:</label>
+                    <input class="hiddenInput" type="text" name="contact_id[0]" value="0">
+                    <label for="">Nome do Contato 1:</label><br/>
                     <input type="text" name="contact_name[0]">
                 </li>
                 <li>
-                    <label for="" class="formLabel">Sobrenome do Contato 1:</label>
+                    <label for="">Sobrenome do Contato 1:</label><br/>
                     <input type="text" name="contact_lastname[0]">
                 </li>
-                <li class="formButton">
+            </template>
+            <li class="formButton">
                     <button class="bitrixBtn" type="button">Adicionar Contato</button>
-                </li>
-                <li>
-                    <button type="submit" <button class="bitrixBtn saveBtn">SALVAR</button>
-                    <a href="/"><button type="button" class="bitrixBtn backBtn">VOLTAR</button></a>
-                </li>
-                </ul>
+            </li>
+            <li>
+                <button type="submit" class="bitrixBtn saveBtn">Salvar</button>
+                <a href="/"><button type="button" class="bitrixBtn backBtn">Voltar</button></a>
+            </li>
+            </ul>
             </form>
         </div>
+    </div>
     </div>
 </template>
 
 <script>
 export default {
+    props: {
+        company: {
+            type: Object
+        },
+        formRoute: {
+            type: String
+        }
+    }
+
 }
 </script>
 
 <style scoped>
-
-    .createCompany {
-        max-width: 100%;
-        border: 3px solid #555;
-        border-radius: 30px;
-        padding: 20px;
-        background: #fff;
-        margin: 10px;
+    .hiddenInput {
+        display: none;
+        visibility: hidden;
     }
 
-    .formHeading {
+    .editCompany {
+        max-width: 100%;
+        background: #fff;
+        margin: 10px;
+        padding: 20px;
+    }
+
+    .editHeading {
         font-weight: 900;
         border-bottom: 2px solid #ddd;
         margin-bottom: 20px;
@@ -71,7 +115,7 @@ export default {
         padding-bottom: 3px;
     }
 
-    .companyForm {
+    .editForm {
         max-width:400px;
         margin:30px;
         background:#fff;
@@ -79,27 +123,27 @@ export default {
         padding:20px;
     }
 
-    .companyForm ul {
+    .editForm ul {
         list-style:none;
         padding:0;
         margin:0;	
     }
 
-    .companyForm li {
+    .editForm li {
         display: block;
         padding: 9px;
         border:1px solid #DDDDDD;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         border-radius: 3px;
     }
 
-    .companyForm li:last-child {
+    .editForm li:last-child {
         border:none;
         margin-bottom: 0px;
         text-align: center;
     }
 
-    .companyForm li > label {
+    .editForm li > label {
         display: block;
         float: left;
         margin-top: -19px;
@@ -111,8 +155,8 @@ export default {
         overflow: hidden;
     }
 
-    .companyForm input[type="text"],
-    .companyForm input[type="email"]
+    .editForm input[type="text"],
+    .editForm input[type="email"]
     {
         box-sizing: border-box;
         -webkit-box-sizing: border-box;
@@ -121,14 +165,14 @@ export default {
         display: block;
         outline: none;
         border: none;
-        height: 25px;
-        line-height: 25px;
+        height: 15px;
+        line-height: 30px;
         font-size: 16px;
         padding: 0;
     }
 
-    .companyForm input[type="text"]:focus,
-    .companyForm input[type="email"]:focus
+    .editForm input[type="text"]:focus,
+    .editForm input[type="email"]:focus
     {
     }
 
