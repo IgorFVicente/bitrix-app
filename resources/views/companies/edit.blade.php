@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
+    <div id="app">
+        <edit-company-form></edit-company-form>
+    </div>
     <a href="/"><button>Voltar</button></a>
     <form action="{{ route('update_company', ['ID' => $company[0]->COMPANY_ID])}}" method="POST"-->
         @csrf
