@@ -51,7 +51,6 @@
 </template>
 
 <script>
-import AddFormFieldButton from '../components/AddFormFieldButton.vue'
 import MaskedInput from 'vue-masked-input'
 
 export default {
