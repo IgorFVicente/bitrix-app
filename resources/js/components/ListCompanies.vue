@@ -103,7 +103,7 @@ export default {
     }
 
     .tcolumn3 {
-        width: 160px;
+        width: 200px;
     }
 
     .tcolumn4 {
@@ -119,7 +119,7 @@ export default {
     }
 
     .listCompanies {
-        max-width: 100%;
+        width:1000px;
         background: #fff;
         margin: 10px;
         padding: 20px;
