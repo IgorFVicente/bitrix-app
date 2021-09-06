@@ -14,27 +14,27 @@
                 </li>
                 <li v-for="(phone, index, i) in phones">
                     <label for="">Telefone {{index + 1}}</label><br/>
-                    <input type="text" :name="'phone[' + index + ']'" :value="phone">
+                    <input type="text" :id="'phone[' + index + ']'" :name="'phone[' + index + ']'" :value="phone">
                 </li>
                 <li class="formButton">
                     <button class="bitrixBtn" type="button" @click.prevent="addPhone(phones)">Adicionar Telefone</button>
                 </li>
                 <li v-for="(email, index, i) in emails">
                     <label for="">E-mail {{index + 1}}</label><br/>
-                    <input type="text" :name="'email[' + index + ']'" :value="email">
+                    <input type="text" :id="'email[' + index + ']'" :name="'email[' + index + ']'" :value="email">
                 </li>
                 <li class="formButton">
                     <button class="bitrixBtn" type="button" @click.prevent="addEmail(emails)">Adicionar e-mail</button>
                 </li>
                 <template v-for="(contact, index, i) in contacts">
-                        <input class="hiddenInput" type="text" :name="'contact_id[' + index +']'" :value="contact.ID">
+                        <input class="hiddenInput" type="text" :id="'contact_id[' + index +']'" :name="'contact_id[' + index +']'" :value="contact.ID">
                     <li>
                         <label for="">Nome do Contato {{index + 1}}:</label><br/>
-                        <input type="text" :name="'contact_name[' + index + ']'" :value="contact.NAME">
+                        <input type="text" :id="'contact_name[' + index + ']'" :name="'contact_name[' + index + ']'" :value="contact.NAME">
                     </li>
                     <li>    
                         <label for="">Sobrenome do Contato {{index + 1}}:</label><br/>
-                        <input type="text" :name="'contact_lastname[' + index + ']'" :value="contact.LAST_NAME">
+                        <input type="text" :id="'contact_lastname[' + index + ']'" :name="'contact_lastname[' + index + ']'" :value="contact.LAST_NAME">
                     </li>
                 </template>
                 <li class="formButton">
@@ -66,14 +66,24 @@ export default {
         }
     },
     methods: {
-        addPhone(phones) {   
+        addPhone(phones) {
+            for (let i = 0; i < phones.length; i++){
+                phones[i] = document.getElementById(`phone[${i}]`).value
+            }
             phones.push('')
         },
         addEmail(emails) {
+            for (let i = 0; i < emails.length; i++){
+                emails[i] = document.getElementById(`email[${i}]`).value
+            }
             emails.push('')
         },
         addContact(contacts) {
-            let contactCount = contacts.length
+            for (let i = 0; i < contacts.length; i++){
+                contacts[i].ID = 0
+                contacts[i].NAME = document.getElementById(`contact_name[${i}]`).value
+                contacts[i].LAST_NAME = document.getElementById(`contact_lastname[${i}]`).value
+            }
             contacts.push({
                 ID: 0,
                 NAME: "",

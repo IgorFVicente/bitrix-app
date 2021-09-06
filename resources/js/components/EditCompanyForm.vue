@@ -14,27 +14,27 @@
             </li>    
             <li v-for="(phone, index, i) in phones">
                 <label for="">Telefone {{index + 1}}</label><br/>
-                <input type="text" :name="'phone[' + index + ']'" :value="phone">
+                <input type="text" :id="'phone[' + index + ']'" :name="'phone[' + index + ']'" :value="phone">
             </li>
             <li class="formButton">
                 <button class="bitrixBtn" type="button" @click.prevent="addPhone">Adicionar Telefone</button>
             </li>
             <li v-for="(email, index, i) in emails">
                 <label for="">E-mail {{index + 1}}</label><br/>
-                <input type="text" :name="'email[' + index + ']'" :value="email">
+                <input type="text" :id="'email[' + index + ']'" :name="'email[' + index + ']'" :value="email">
             </li>
             <li class="formButton">
                     <button class="bitrixBtn" type="button" @click.prevent="addEmail">Adicionar E-mail</button>
             </li>
             <template v-for="(contact, index, i) in contacts">
-                    <input class="hiddenInput" type="text" :name="'contact_id[' + index +']'" :value="contact.ID">
+                    <input class="hiddenInput" type="text" :id="'contact_id[' + index +']'" :name="'contact_id[' + index +']'" :value="contact.ID">
                 <li>
                     <label for="">Nome do Contato {{index + 1}}:</label><br/>
-                    <input type="text" :name="'contact_name[' + index + ']'" :value="contact.NAME">
+                    <input type="text" :id="'contact_name[' + index + ']'" :name="'contact_name[' + index + ']'" :value="contact.NAME">
                 </li>
                 <li>    
                     <label for="">Sobrenome do Contato {{index + 1}}:</label><br/>
-                    <input type="text" :name="'contact_lastname[' + index + ']'" :value="contact.LAST_NAME">
+                    <input type="text" :id="'contact_lastname[' + index + ']'" :name="'contact_lastname[' + index + ']'" :value="contact.LAST_NAME">
                 </li>
             </template>    
             <li class="formButton">
@@ -72,20 +72,31 @@ export default {
         }
     },
     methods: {
-        addPhone() {   
+        addPhone() {
+            for (let i = 0; i < this.company.PHONE.length; i++) {
+                this.company.PHONE[i] = document.getElementById(`phone[${i}]`).value
+                console.log(document.getElementById(`phone[${i}]`).value)
+            }
             this.company.PHONE.push('')
         },
         addEmail() {
+            for (let i = 0; i < this.company.EMAIL.length; i++) {
+                this.company.EMAIL[i] = document.getElementById(`email[${i}]`).value
+                console.log(document.getElementById(`email[${i}]`).value)
+            }
             this.company.EMAIL.push('')
         },
         addContact() {
-            let contactCount = this.company.CONTACTS.length
+            for (let i = 0; i < this.company.CONTACTS.length; i++) {
+                this.company.CONTACTS[i].ID = document.getElementById(`contact_id[${i}]`).value
+                this.company.CONTACTS[i].NAME = document.getElementById(`contact_name[${i}]`).value
+                this.company.CONTACTS[i].LAST_NAME = document.getElementById(`contact_lastname[${i}]`).value
+            }
             this.company.CONTACTS.push({
                 ID: 0,
                 NAME: "",
                 LAST_NAME: ""
             })
-            console.log(this.company.CONTACTS[contactCount])
         }
     }
 }
