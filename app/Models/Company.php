@@ -108,15 +108,61 @@ class Company extends Model
         );
 
         if ($phone) {
+            $phoneIds = array();
+            $result = webhook('crm.company.get', array('id' => $id));
+            if ($result['result']['HAS_PHONE'] != "N") {
+                for ($i = 0; $i < count($result['result']['PHONE']); $i++) {
+                    array_push($phoneIds, $result['result']['PHONE'][$i]["ID"]);
+                }
+            }
             for ($i = 0; $i < count($phone); $i++) {
                 $phoneReplaceChar = preg_replace("/[^0-9]/", "", $phone[$i]);
-                array_push($queryData['fields']["PHONE"], array("VALUE" => $phoneReplaceChar));
+                if ($i < count($phoneIds)) {
+                    array_push($queryData['fields']["PHONE"], array("ID" => $phoneIds[$i], "VALUE" => $phoneReplaceChar));
+                } else {
+                    array_push($queryData['fields']["PHONE"], array("ID" => "", "VALUE" => $phoneReplaceChar));
+                }
+            }
+        } else {
+            $phoneIds = array();
+            $result = webhook('crm.company.get', array('id' => $id));
+            if ($result['result']['HAS_PHONE'] != "N") {
+                for ($i = 0; $i < count($result['result']['PHONE']); $i++) {
+                    array_push($phoneIds, $result['result']['PHONE'][$i]["ID"]);
+                }
+            }
+
+            for ($i = 0; $i < count($phoneIds); $i++) {
+                array_push($queryData['fields']["PHONE"], array("ID" => $phoneIds[$i], "VALUE" => ""));
             }
         }
 
         if ($email) {
+            $emailIds = array();
+            $result = webhook('crm.company.get', array('id' => $id));
+            if ($result['result']['HAS_EMAIL'] != "N") {
+                for ($i = 0; $i < count($result['result']['EMAIL']); $i++) {
+                    array_push($emailIds, $result['result']['EMAIL'][$i]["ID"]);
+                }
+            }
             for ($i = 0; $i < count($email); $i++) {
-                array_push($queryData['fields']["EMAIL"], array("VALUE" => $email[$i]));
+                if ($i < count($emailIds)) {
+                    array_push($queryData['fields']["EMAIL"], array("ID" => $emailIds[$i], "VALUE" => $email[$i]));
+                } else {
+                    array_push($queryData['fields']["EMAIL"], array("VALUE" => $email[$i]));
+                }
+            }
+        } else {
+            $emailIds = array();
+            $result = webhook('crm.company.get', array('id' => $id));
+            if ($result['result']['HAS_EMAIL'] != "N") {
+                for ($i = 0; $i < count($result['result']['EMAIL']); $i++) {
+                    array_push($emailIds, $result['result']['EMAIL'][$i]["ID"]);
+                }
+            }
+
+            for ($i = 0; $i < count($emailIds); $i++) {
+                array_push($queryData['fields']["EMAIL"], array("ID" => $emailIds[$i], "VALUE" => ""));
             }
         }
 

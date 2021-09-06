@@ -123,12 +123,14 @@ class CompaniesController extends Controller
                     $request->ID,
                     $contact_result['result']
                 );
-            } else if ($request->contact_name != '') {
+            } else if ($request->contact_name[$i] != '') {
                 Contact::updateContact(
                     $request->contact_id[$i],
                     $request->contact_name[$i],
                     $request->contact_lastname[$i]
                 );
+            } else {
+                Contact::removeContact($request->contact_id[$i]);
             }
         }
 

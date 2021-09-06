@@ -68,6 +68,15 @@ class Contact extends Model
         DB::table('contacts')->where('COMPANY_ID', $id)->delete();
     }
 
+    public static function removeContact($contact_id)
+    {
+        $queryData = array(
+            "id" => $contact_id
+        );
+        webhook('crm.contact.delete', $queryData);
+        DB::table('contacts')->where('ID', $contact_id)->delete();
+    }
+
     public function companies()
     {
         return $this->belongsTo(
