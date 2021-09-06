@@ -1,64 +1,56 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# BITRIX APP
+***
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+#### Este é um projeto de CRUD integrado à api do sistema Bitrix, para realizar o registro, edição e exclusão de empresas e contatos relacionados através de chamadas de Webhook
+***
+## Ferramentas
 
-## About Laravel
+O projeto foi construído utilizando o framework laravel 8 para as ações do backend, integrado ao framework Vue.js no frontend
+  
+***
+## Estrutura do Banco de Dados
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+O banco de dados é composto por duas tabelas, além da tabela de migrations:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. COMPANIES - Armazena o ID, Título, Renda, Telefones e E-mails da empresa, além de um timestamp de criação e atualização
+2. CONTACTS - Armazena o ID, Nome, Sobrenome e ID da empresa à qual o contato pertence, além de um timestamp de criação e atualização
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+***
+## Tela inicial
+  
+ A tela inicial apresenta uma lista de todas as empresas cadastradas que foram salvas no banco de dados e seus cadastros refletidos no CRM do Bitrix.  
 
-## Learning Laravel
+As empresas podem ser cadastradas com os seguintes dados: 
+- ID (gerado automaticamente pela resposta do webhook de criação)
+- Nome
+- Receita anual
+- Telefones*
+- E-mails*
+- Contatos*
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+\* Estes itens permitem o cadastro de mais de um por empresa
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Além dos dados relacionados acima, para cada empresa diferente são apresentados os botões para editá-la ou exclui-la.
+***
+## Tela de criação de empresas
 
-## Laravel Sponsors
+Ao apertar o botão "Novo Registro" na tela inicial o usuário é encaminhado à tela de "NOVA EMPRESA".
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+A tela de criação permite a adição de um ou mais dados para a criação de uma nova empresa que será salva no banco de dados e no CRM Bitrix.
 
-### Premium Partners
+Os botões de "adicionar telefone", "adicionar e-mail" e "adicionar contato" permitem a adição de mais de um destes elementos de uma vez.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
+Ao apertar o botão de salvar é enviado uma chamada ao endpoint **'crm.company.add'** e, havendo um ou mais contatos, ao endpoint **'crm.contact.add'** e **'crm.company.contact.add'** para criação e vínculo destas entidades no CRM. Ao mesmo tempo, são salvos os dados no banco de dados.
 
-## Contributing
+***
+## Tela de edição de empresas
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Ao apertar para "Editar" uma empresa presente na lista, o usuário é encaminhado para uma página de edição da empresa à qual o botão se refere.
 
-## Code of Conduct
+A página é similar à página de criação, mas realiza a atualização dos dados da empresa e contatos já salvos, tanto no Bitrix, através dos endpoints **'crm.company.update'**, **'crm.contact.update'**, **'crm.contact.add'** e **'crm.company.contact.add'**', quanto no Banco de dados.
+***
+## Exclusão de empresas
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Ao apertar para "Excluir" uma empresa presente na lista, a aplicação excluirá a empresa à qual o botão se refere, assim como os contatos relacionados a ela tanto no Bitrix quanto no banco de dados.
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+A exclusão no Bitrix ocorre através de chamadas aos endpoints **'crm.company.delete'** e **'crm.contact.delete'**.
