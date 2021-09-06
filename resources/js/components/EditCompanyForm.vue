@@ -14,7 +14,7 @@
             </li>    
             <li v-for="(phone, index, i) in phones">
                 <label for="">Telefone {{index + 1}}</label><br/>
-                <input type="text" :id="'phone[' + index + ']'" :name="'phone[' + index + ']'" :value="phone">
+                <masked-input type="text" mask="11 (11) 11111-1111" :id="'phone[' + index + ']'" :name="'phone[' + index + ']'" :value="phone"/>
             </li>
             <li class="formButton">
                 <button class="bitrixBtn" type="button" @click.prevent="addPhone">Adicionar Telefone</button>
@@ -53,6 +53,7 @@
 
 <script>
 import AddFormFieldButton from '../components/AddFormFieldButton.vue'
+import MaskedInput from 'vue-masked-input'
 
 export default {
 
@@ -98,6 +99,9 @@ export default {
                 LAST_NAME: ""
             })
         }
+    },
+    components: {
+        MaskedInput
     }
 }
 </script>

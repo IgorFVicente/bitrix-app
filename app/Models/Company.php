@@ -26,7 +26,8 @@ class Company extends Model
 
         if ($phone) {
             for ($i = 0; $i < count($phone); $i++) {
-                array_push($queryData['fields']["PHONE"], array("VALUE" => $phone[$i]));
+                $phoneReplaceChar = preg_replace("/[^0-9]/", "", $phone[$i]);
+                array_push($queryData['fields']["PHONE"], array("VALUE" => $phoneReplaceChar));
             }
         }
 
@@ -108,7 +109,8 @@ class Company extends Model
 
         if ($phone) {
             for ($i = 0; $i < count($phone); $i++) {
-                array_push($queryData['fields']["PHONE"], array("VALUE" => $phone[$i]));
+                $phoneReplaceChar = preg_replace("/[^0-9]/", "", $phone[$i]);
+                array_push($queryData['fields']["PHONE"], array("VALUE" => $phoneReplaceChar));
             }
         }
 
