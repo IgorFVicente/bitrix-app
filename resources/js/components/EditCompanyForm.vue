@@ -12,62 +12,33 @@
                 <label for="">Receita Anual:</label> <br>
                 <input type="text" name="revenue" :value="company.REVENUE">
             </li>    
-            <template v-if="company.PHONE">
-                <li v-for="(phone, index, i) in company.PHONE">
-                    <label for="">Telefone {{index + 1}}</label><br/>
-                    <input type="text" :name="'phone[' + index + ']'" :value="phone">
-                </li>
-            </template>
-            <template v-else>
-                <li>
-                    <label for="">Telefone 1:</label><br/>
-                    <input type="text" name="phone[0]">
-                </li>
-            </template>
-            <li class="formButton">
-                    <button class="bitrixBtn" type="button">Adicionar telefone</button>
+            <li v-for="(phone, index, i) in phones">
+                <label for="">Telefone {{index + 1}}</label><br/>
+                <input type="text" :name="'phone[' + index + ']'" :value="phone">
             </li>
-            <template v-if="company.EMAIL">
-                <li v-for="(email, index, i) in company.EMAIL">
-                    <label for="">E-mail {{index + 1}}</label><br/>
-                    <input type="text" :name="'email[' + index + ']'" :value="email">
-                </li>
-            </template>
-            <template v-else>
-                <li>
-                    <label for="">E-mail 1:</label><br/>
-                    <input type="text" name="email[0]">
-                </li>
-            </template>
             <li class="formButton">
-                    <button class="bitrixBtn" type="button">Adicionar e-mail</button>
+                <button class="bitrixBtn" type="button" @click.prevent="addPhone">Adicionar Telefone</button>
             </li>
-            <template v-if="company.CONTACTS">
-                <template v-for="(contact, index, i) in company.CONTACTS">
-                        <input class="hiddenInput" type="text" :name="'contact_id[' + index +']'" :value="contact.ID">
-                    <li>
-                        <label for="">Nome do Contato {{index + 1}}:</label><br/>
-                        <input type="text" :name="'contact_name[' + index + ']'" :value="contact.NAME">
-                    </li>
-                    <li>    
-                        <label for="">Sobrenome do Contato {{index + 1}}:</label><br/>
-                        <input type="text" :name="'contact_lastname[' + index + ']'" :value="contact.LAST_NAME">
-                    </li>
-                </template>    
-            </template>
-            <template v-else>
-                <li>
-                    <input class="hiddenInput" type="text" name="contact_id[0]" value="0">
-                    <label for="">Nome do Contato 1:</label><br/>
-                    <input type="text" name="contact_name[0]">
-                </li>
-                <li>
-                    <label for="">Sobrenome do Contato 1:</label><br/>
-                    <input type="text" name="contact_lastname[0]">
-                </li>
-            </template>
+            <li v-for="(email, index, i) in emails">
+                <label for="">E-mail {{index + 1}}</label><br/>
+                <input type="text" :name="'email[' + index + ']'" :value="email">
+            </li>
             <li class="formButton">
-                    <button class="bitrixBtn" type="button">Adicionar Contato</button>
+                    <button class="bitrixBtn" type="button" @click.prevent="addEmail">Adicionar E-mail</button>
+            </li>
+            <template v-for="(contact, index, i) in contacts">
+                    <input class="hiddenInput" type="text" :name="'contact_id[' + index +']'" :value="contact.ID">
+                <li>
+                    <label for="">Nome do Contato {{index + 1}}:</label><br/>
+                    <input type="text" :name="'contact_name[' + index + ']'" :value="contact.NAME">
+                </li>
+                <li>    
+                    <label for="">Sobrenome do Contato {{index + 1}}:</label><br/>
+                    <input type="text" :name="'contact_lastname[' + index + ']'" :value="contact.LAST_NAME">
+                </li>
+            </template>    
+            <li class="formButton">
+                    <button class="bitrixBtn" type="button" @click.prevent="addContact">Adicionar contato</button>
             </li>
             <li>
                 <button type="submit" class="bitrixBtn saveBtn">Salvar</button>
@@ -81,7 +52,10 @@
 </template>
 
 <script>
+import AddFormFieldButton from '../components/AddFormFieldButton.vue'
+
 export default {
+
     props: {
         company: {
             type: Object
@@ -89,8 +63,31 @@ export default {
         formRoute: {
             type: String
         }
+    },
+    data() {
+        return { 
+            phones: this.company.PHONE,
+            emails: this.company.EMAIL,
+            contacts: this.company.CONTACTS
+        }
+    },
+    methods: {
+        addPhone() {   
+            this.company.PHONE.push('')
+        },
+        addEmail() {
+            this.company.EMAIL.push('')
+        },
+        addContact() {
+            let contactCount = this.company.CONTACTS.length
+            this.company.CONTACTS.push({
+                ID: 0,
+                NAME: "",
+                LAST_NAME: ""
+            })
+            console.log(this.company.CONTACTS[contactCount])
+        }
     }
-
 }
 </script>
 

@@ -25,6 +25,8 @@ Vue.component('create-company-form', require('./components/CreateCompanyForm.vue
 Vue.component('list-companies', require('./components/ListCompanies.vue').default);
 Vue.component('edit-company-form', require('./components/EditCompanyForm.vue').default);
 
+//Vue.component('add-form-field-button', require('./components/AddFormFieldButton.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

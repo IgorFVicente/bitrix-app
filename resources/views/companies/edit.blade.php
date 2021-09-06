@@ -13,12 +13,12 @@
                 $contactsArray = array();
                 $fixedCompany['COMPANY_ID'] = $company[$i]->COMPANY_ID;
                 $fixedCompany['TITLE'] = $company[$i]->TITLE;
-                $fixedCompany['PHONE'] = unserialize($company[$i]->PHONE);
-                $fixedCompany['EMAIL'] = unserialize($company[$i]->EMAIL);
+                $fixedCompany['PHONE'] = unserialize($company[$i]->PHONE) ? unserialize($company[$i]->PHONE) : array("");
+                $fixedCompany['EMAIL'] = unserialize($company[$i]->EMAIL) ? unserialize($company[$i]->EMAIL) : array("");
                 $fixedCompany['REVENUE'] = $company[$i]->REVENUE;
-                $contact['ID'] = $company[$i]->ID;
-                $contact['NAME'] = $company[$i]->NAME;
-                $contact['LAST_NAME'] = $company[$i]->LAST_NAME;
+                $contact['ID'] = $company[$i]->ID ? $company[$i]->ID : 0;
+                $contact['NAME'] = $company[$i]->NAME ? $company[$i]->NAME : "";
+                $contact['LAST_NAME'] = $company[$i]->LAST_NAME ? $company[$i]->LAST_NAME : "";
                 array_push($contactsArray, $contact);
                 $fixedCompany['CONTACTS'] = $contactsArray;
             } else {

@@ -12,30 +12,33 @@
                     <label for="" class="formLabel">Receita Anual:</label> 
                     <input type="text" name="revenue">
                 </li>
-                <li>
-                    <label for="" class="formLabel">Telefone:</label> 
-                    <input type="text" name="phone[0]">
+                <li v-for="(phone, index, i) in phones">
+                    <label for="">Telefone {{index + 1}}</label><br/>
+                    <input type="text" :name="'phone[' + index + ']'" :value="phone">
                 </li>
                 <li class="formButton">
-                    <button class="bitrixBtn" type="button">Adicionar telefone</button>
+                    <button class="bitrixBtn" type="button" @click.prevent="addPhone(phones)">Adicionar Telefone</button>
                 </li>
-                <li>
-                    <label for="" class="formLabel">E-mail:</label>
-                    <input type="email" name="email[0]">
-                </li>
-                <li class="formButton">
-                    <button class="bitrixBtn" type="button">Adicionar e-mail</button>
-                </li>
-                <li>
-                    <label for="" class="formLabel">Nome do Contato 1:</label>
-                    <input type="text" name="contact_name[0]">
-                </li>
-                <li>
-                    <label for="" class="formLabel">Sobrenome do Contato 1:</label>
-                    <input type="text" name="contact_lastname[0]">
+                <li v-for="(email, index, i) in emails">
+                    <label for="">E-mail {{index + 1}}</label><br/>
+                    <input type="text" :name="'email[' + index + ']'" :value="email">
                 </li>
                 <li class="formButton">
-                    <button class="bitrixBtn" type="button">Adicionar Contato</button>
+                    <button class="bitrixBtn" type="button" @click.prevent="addEmail(emails)">Adicionar e-mail</button>
+                </li>
+                <template v-for="(contact, index, i) in contacts">
+                        <input class="hiddenInput" type="text" :name="'contact_id[' + index +']'" :value="contact.ID">
+                    <li>
+                        <label for="">Nome do Contato {{index + 1}}:</label><br/>
+                        <input type="text" :name="'contact_name[' + index + ']'" :value="contact.NAME">
+                    </li>
+                    <li>    
+                        <label for="">Sobrenome do Contato {{index + 1}}:</label><br/>
+                        <input type="text" :name="'contact_lastname[' + index + ']'" :value="contact.LAST_NAME">
+                    </li>
+                </template>
+                <li class="formButton">
+                    <button class="bitrixBtn" type="button" @click.prevent="addContact(contacts)">Adicionar contato</button>
                 </li>
                 <li>
                     <button type="submit" <button class="bitrixBtn saveBtn">SALVAR</button>
@@ -48,13 +51,47 @@
 </template>
 
 <script>
+import AddFormFieldButton from '../components/AddFormFieldButton.vue'
+import MaskedInput from 'vue-masked-input'
+
 export default {
-    props: ['formRoute']
+    data() {
+        return { 
+            phones: [""],
+            emails: [""],
+            contacts: [{
+                NAME: "",
+                LAST_NAME: ""
+            }]
+        }
+    },
+    methods: {
+        addPhone(phones) {   
+            phones.push('')
+        },
+        addEmail(emails) {
+            emails.push('')
+        },
+        addContact(contacts) {
+            let contactCount = contacts.length
+            contacts.push({
+                ID: 0,
+                NAME: "",
+                LAST_NAME: ""
+            })
+        }
+    },
+    props: ['formRoute']    
 }
 </script>
 
 <style scoped>
 
+    .hiddenInput {
+        display: none;
+        visibility: hidden;
+    }
+    
     .createCompany {
         max-width: 100%;
         background: #fff;
